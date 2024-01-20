@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"runtime"
-	github.com/eilonc-dev/moaa/v2/pkg/sysinfo
+	"github.com/eilonc-dev/moaa/v2/pkg/sysinfo"
 )
 
 func main() {
