@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"runtime"
-	"pkg/sysinfo"
+	"../../pkg/sysinfo"
 )
 
 func main() {
