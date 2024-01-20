@@ -1,3 +1,3 @@
-module github.com/eilonc-dev/moaa/v2
+module github.com/eilonc-dev/moaa
 
 go 1.18
