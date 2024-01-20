@@ -256,8 +256,7 @@ func getLoggedInUsers() int {
 			return 0
 		}
 		return strings.Count(out.String(), "\n")
-	}
-	else if runtime.GOOS == "windows" {
+	} else if runtime.GOOS == "windows" {
 		// windows logged in users
 		cmd := exec.Command("query", "user")
 		var out bytes.Buffer
@@ -267,8 +266,7 @@ func getLoggedInUsers() int {
 			log.Println("Error getting logged in users:", err)
 			return 0
 		}
-	}
-	else {
+	} else {
 		return 0
 	}
 }
@@ -322,8 +320,7 @@ func getDiskUsage() float64 {
             return 0
         }
         return float64(totalUsedSpace) / float64(totalSpace) * 100
-    }
-	else if runtime.GOOS == "windows" {
+    } else if runtime.GOOS == "windows" {
 		// windows disk usage
         cmd := exec.Command("wmic", "logicaldisk", "get", "freespace,size")
         var out bytes.Buffer
@@ -452,8 +449,7 @@ func getInstalledPackages() []string {
 		if err := scanner.Err(); err != nil {
 			log.Println("Error reading rpm output:", err)
 		}
-	}
-	else if runtime.GOOS == "windows" {
+	} else if runtime.GOOS == "windows" {
 		// windows installed packages
 		cmd := exec.Command("wmic", "product", "get", "name")
 		var out bytes.Buffer
@@ -470,8 +466,7 @@ func getInstalledPackages() []string {
 		if err := scanner.Err(); err != nil {
 			log.Println("Error reading wmic output:", err)
 		}
-	}
-	else {
+	} else {
 		return installedPackages
 	}
 }
