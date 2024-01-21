@@ -461,5 +461,5 @@ func getInstalledPackages() []string {
 	} else {
 		return installedPackages
 	}
-	return -1
+	return installedPackages
 }
