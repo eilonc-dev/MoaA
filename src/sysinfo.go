@@ -26,7 +26,7 @@
 // 23. Running containers and images
 // 24. Installed packages and dependencies (include versions)
 
-package pkg
+package sysinfo
 
 import (
 	"log"
