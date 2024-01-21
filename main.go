@@ -2,8 +2,7 @@ package main
 
 import (
 	"fmt"
-	"moaa/pkg/sysinfo"
-	""
+	"moaa/src/sysinfo"
 )
 
 func main() {
