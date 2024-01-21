@@ -19,7 +19,7 @@ func main() {
     fmt.Println("IP:", info.IP)
     fmt.Println("MAC:", info.MAC)
     fmt.Println("FQDN:", info.FQDN)
-    fmt.Println("Uptime:", info.Uptime)
+    fmt.Println("Uptime:", info.Uptime, "seconds")
     fmt.Println("Last Boot Time:", info.LastBootTime)
     fmt.Println("Processes:", info.Processes)
     fmt.Println("Users:", info.Users)
