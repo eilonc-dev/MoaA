@@ -38,6 +38,7 @@ import (
 	"strconv"
 	"bufio"
 	"bytes"
+	"net"
 	"github.com/shirou/gopsutil/host"
 	"github.com/shirou/gopsutil/cpu"
 	"github.com/shirou/gopsutil/mem"
