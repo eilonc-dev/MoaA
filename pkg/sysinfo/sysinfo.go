@@ -49,6 +49,8 @@ import (
 	"github.com/shirou/gopsutil/cpu"
 	"github.com/shirou/gopsutil/mem"
 	"github.com/shirou/gopsutil/disk"
+	"github.com/shirou/gopsutil/process"
+	"github.com/shirou/gopsutil/load"
 )
 
 type SystemInfo struct {
@@ -98,7 +100,6 @@ func GetSystemInfo() SystemInfo {
 	systemInfo.CPUUsage = getCPUUsage()
 	systemInfo.MemoryUsage = getMemoryUsage()
 	systemInfo.DiskUsage = getDiskUsage()
-	systemInfo.FileDescriptors = getFileDescriptors()
 	systemInfo.Platform = getPlatform()
 	systemInfo.PlatformFamily = getPlatformFamily()
 	systemInfo.PlatformVersion = getPlatformVersion()
@@ -117,7 +118,6 @@ func CollectSystemInfo() SystemInfo {
     info.CPUUsage = getCPUUsage()
     info.MemoryUsage = getMemoryUsage()
     info.DiskUsage = getDiskUsage()
-    info.FileDescriptors = getFileDescriptors()
     info.Platform = getPlatform()
     info.PlatformFamily = getPlatformFamily()
     info.PlatformVersion = getPlatformVersion()
@@ -214,7 +214,7 @@ func getUptime() string {
 		log.Println("Error getting uptime:", err)
 		return ""
 	}
-	return strconv.FormatFloat(uptime, 'f', 2, 64)
+	return strconv.FormatFloat(float64(uptime), 'f', 2, 64)
 }
 
 func getLastBootTime() string {
@@ -227,7 +227,7 @@ func getLastBootTime() string {
 }
 
 func getProcesses() int {
-	processes, err := host.Processes()
+	processes, err := process.Processes()
 	if err != nil {
 		log.Println("Error getting processes:", err)
 		return 0
@@ -269,15 +269,16 @@ func getLoggedInUsers() int {
 	} else {
 		return 0
 	}
+	return 0
 }
 
 func getSystemLoad() float64 {
-	load, err := host.LoadAvg()
+	avg, err := load.Avg()
 	if err != nil {
 		log.Println("Error getting system load:", err)
 		return 0
 	}
-	return load.Load1
+	return avg.Load1
 }
 
 func getCPUUsage() float64 {
@@ -359,15 +360,6 @@ func getDiskUsage() float64 {
         return 100 - float64(totalFreeSpace) / float64(totalSpace) * 100
     }
     return 0
-}
-
-func getFileDescriptors() int {
-	fileDescriptors, err := host.Connections("all")
-	if err != nil {
-		log.Println("Error getting file descriptors:", err)
-		return 0
-	}
-	return len(fileDescriptors)
 }
 
 func getPlatform() string {
@@ -469,4 +461,5 @@ func getInstalledPackages() []string {
 	} else {
 		return installedPackages
 	}
+	return -1
 }
