@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"runtime"
 	"github.com/eilonc-dev/moaa/pkg/sysinfo"
 )
 
