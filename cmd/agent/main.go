@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/eilonc-dev/moaa/pkg/sysinfo"
+	"github.com/eilonc-dev/moaa/pkg/sysinfo" as pkg
 )
 
 func main() {
