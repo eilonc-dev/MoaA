@@ -154,7 +154,7 @@ func getIPAddresses() ([]string) {
 
 // getNetworkInterfaces is a function that returns the network interfaces of the host machine.
 func getNetworkInterfaces() ([]NetworkInterface) {
-	interfaces:= net.Interfaces()
+	interfaces, err := net.Interfaces()
 	if err != nil {
 		return log.Println("failed to retrieve network interfaces: %v", err)
 	}
@@ -187,7 +187,8 @@ func GetTCPStats() (TCPStats) {
 	var stats TCPStats
 	tcp, err := net.Connections("tcp")
 	if err != nil {
-		return nil, log.Println("Failed to retrieve TCP connection statistics: %v", err)
+		log.Println("Failed to retrieve TCP connection statistics: %v", err)
+		return nil
 	}
 	for _, t := range tcp {
 		switch t.Status {
