@@ -31,9 +31,7 @@ package netinfo
 
 import (
 	"net"
-	"net/http"
 	"os"
-	"fmt"
 	"log"
 	gopsutilnet "github.com/shirou/gopsutil/net"
 	"bufio"
