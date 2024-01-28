@@ -266,18 +266,18 @@ func getIPStats() (IPStats) {
 // getNetworkConfig is a function that returns the network configuration of the host machine.
 func getNetworkConfig() NetworkConfig {
 	var config NetworkConfig
-	config.DNS, dnsErr = getDNS()
-	config.SubnetMask, subnetMaskErr = getSubnetMask()
-	config.DefaultGateway, defaultGatewayErr = getDefaultGateway()
+	config.DNS = getDNS()
+	config.SubnetMask = getSubnetMask()
+	config.DefaultGateway = getDefaultGateway()
 	return config
 }
 
 // getDNS is a function that returns the DNS of the host machine.
-func getDNS() ([]string, error) {
+func getDNS() ([]string) {
 	var dns []string
 	resolv, err := os.Open("/etc/resolv.conf")
 	if err != nil {
-		return dns, fmt.Errorf("Failed to retrieve DNS: %v", err)
+		log.Println("Failed to retrieve DNS: %v", err)
 	}
 	defer resolv.Close()
 	scanner := bufio.NewScanner(resolv)
@@ -287,51 +287,51 @@ func getDNS() ([]string, error) {
 			dns = append(dns, strings.Fields(line)[1])
 		}
 	}
-	return dns, nil
+	return dns
 }
 
 // getSubnetMask is a function that returns the subnet mask of the host machine.
-func getSubnetMask() (string, error) {
+func getSubnetMask() (string) {
 	interfaces, err := net.Interfaces()
 	if err != nil {
-		return "", fmt.Errorf("Failed to retrieve subnet mask: %v", err)
+		log.Println("Failed to retrieve subnet mask: %v", err)
 	}
 	var subnetMask string
 	for _, iface := range interfaces {
 		addrs, err := iface.Addrs()
 		if err != nil {
-			return "", fmt.Errorf("Failed to retrieve subnet mask: %v", err)
+			return log.Println("Failed to retrieve subnet mask: %v", err)
 		}
 		for _, addr := range addrs {
 			if strings.Contains(addr.String(), "/") {
 				subnetMask = strings.Split(addr.String(), "/")[1]
-				return subnetMask, nil
+				return subnetMask
 			}
 		}
 	}
-	return "", fmt.Errorf("Subnet mask not found")
+	return ""
 }
 
 // getDefaultGateway is a function that returns the default gateway of the host machine.
 func getDefaultGateway() (string, error) {
 	interfaces, err := net.Interfaces()
 	if err != nil {
-		return "", fmt.Errorf("Failed to retrieve default gateway: %v", err)
+		log.Println("Failed to retrieve default gateway: %v", err)
 	}
 	var defaultGateway string
 	for _, iface := range interfaces {
 		addrs, err := iface.Addrs()
 		if err != nil {
-			return "", fmt.Errorf("Failed to retrieve default gateway: %v", err)
+			log.Println("Failed to retrieve default gateway: %v", err)
 		}
 		for _, addr := range addrs {
 			if strings.Contains(addr.String(), "/") {
 				defaultGateway = strings.Split(addr.String(), "/")[0]
-				return defaultGateway, nil
+				return defaultGateway
 			}
 		}
 	}
-	return "", fmt.Errorf("Default gateway not found")
+	return ""
 }
 
 // getActiveConnections is a function that returns the active connections of the host machine.
