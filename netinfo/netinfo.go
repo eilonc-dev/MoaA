@@ -507,7 +507,7 @@ func getOutgoingTraffic() (int) {
 // getTotalTraffic is a function that returns the total traffic of the host machine.
 func getTotalTraffic() (int) {
 	var totalTraffic int
-	netStats, err := net.IOCounters(false)
+	netStats, err := gopsutilnet.IOCounters(false)
 	if err != nil {
 		log.Println("Failed to retrieve total traffic: %v", err)
 	}
