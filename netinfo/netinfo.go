@@ -221,7 +221,7 @@ func getTCPStats() (TCPStats) {
 // getUDPStats is a function that returns the UDP connection statistics of the host machine.
 func getUDPStats() (UDPStats) {
 	var stats UDPStats
-	udp, err := net.Connections("udp")
+	udp, err := gopsutilnet.Connections("udp")
 	if err != nil {
 		log.Println("Failed to retrieve UDP connection statistics: %v", err)
 	}
@@ -236,7 +236,7 @@ func getUDPStats() (UDPStats) {
 // getICMPStats is a function that returns the ICMP connection statistics of the host machine.
 func getICMPStats() (ICMPStats) {
 	var stats ICMPStats
-	icmp, err := net.Connections("icmp")
+	icmp, err := gopsutilnet.Connections("icmp")
 	if err != nil {
 		log.Println("Failed to retrieve ICMP connection statistics: %v", err)
 	}
@@ -251,7 +251,7 @@ func getICMPStats() (ICMPStats) {
 // getIPStats is a function that returns the IP connection statistics of the host machine.
 func getIPStats() (IPStats) {
 	var stats IPStats
-	ip, err := net.Connections("ip")
+	ip, err := gopsutilnet.Connections("ip")
 	if err != nil {
 		log.Println("Failed to retrieve IP connection statistics: %v", err)
 	}
@@ -346,7 +346,7 @@ func getActiveConnections() ActiveConnections {
 // getActiveConnectionsByProtocol is a function that returns the active connections of the host machine by protocol.
 func getActiveConnectionsByProtocol() ([]Connection, error) {
 	var connections []Connection
-	tcp, err := net.Connections("tcp")
+	tcp, err := gopsutilnet.Connections("tcp")
 	if err != nil {
 		return nil, fmt.Errorf("Failed to retrieve active connections by protocol: %v", err)
 	}
@@ -358,7 +358,7 @@ func getActiveConnectionsByProtocol() ([]Connection, error) {
 		}
 		connections = append(connections, connection)
 	}
-	udp, err := net.Connections("udp")
+	udp, err := gopsutilnet.Connections("udp")
 	if err != nil {
 		return nil, fmt.Errorf("Failed to retrieve active connections by protocol: %v", err)
 	}
@@ -370,7 +370,7 @@ func getActiveConnectionsByProtocol() ([]Connection, error) {
 		}
 		connections = append(connections, connection)
 	}
-	icmp, err := net.Connections("icmp")
+	icmp, err := gopsutilnet.Connections("icmp")
 	if err != nil {
 		return nil, fmt.Errorf("Failed to retrieve active connections by protocol: %v", err)
 	}
@@ -382,7 +382,7 @@ func getActiveConnectionsByProtocol() ([]Connection, error) {
 		}
 		connections = append(connections, connection)
 	}
-	ip, err := net.Connections("ip")
+	ip, err := gopsutilnet.Connections("ip")
 	if err != nil {
 		return nil, fmt.Errorf("Failed to retrieve active connections by protocol: %v", err)
 	}
@@ -400,7 +400,7 @@ func getActiveConnectionsByProtocol() ([]Connection, error) {
 // getActiveConnectionsByPort is a function that returns the active connections of the host machine by port.
 func getActiveConnectionsByPort() ([]Connection, error) {
 	var connections []Connection
-	tcp, err := net.Connections("tcp")
+	tcp, err := gopsutilnet.Connections("tcp")
 	if err != nil {
 		return nil, fmt.Errorf("Failed to retrieve active connections by port: %v", err)
 	}
@@ -412,7 +412,7 @@ func getActiveConnectionsByPort() ([]Connection, error) {
 		}
 		connections = append(connections, connection)
 	}
-	udp, err := net.Connections("udp")
+	udp, err := gopsutilnet.Connections("udp")
 	if err != nil {
 		return nil, fmt.Errorf("Failed to retrieve active connections by port: %v", err)
 	}
@@ -430,7 +430,7 @@ func getActiveConnectionsByPort() ([]Connection, error) {
 // getActiveConnectionsByIP is a function that returns the active connections of the host machine by IP.
 func getActiveConnectionsByIP() ([]Connection, error) {
 	var connections []Connection
-	tcp, err := net.Connections("tcp")
+	tcp, err := gopsutilnet.Connections("tcp")
 	if err != nil {
 		return nil, fmt.Errorf("Failed to retrieve active connections by IP: %v", err)
 	}
@@ -442,7 +442,7 @@ func getActiveConnectionsByIP() ([]Connection, error) {
 		}
 		connections = append(connections, connection)
 	}
-	udp, err := net.Connections("udp")
+	udp, err := gopsutilnet.Connections("udp")
 	if err != nil {
 		return nil, fmt.Errorf("Failed to retrieve active connections by IP: %v", err)
 	}
