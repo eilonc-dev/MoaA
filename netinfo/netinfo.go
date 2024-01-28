@@ -313,7 +313,7 @@ func getSubnetMask() (string) {
 }
 
 // getDefaultGateway is a function that returns the default gateway of the host machine.
-func getDefaultGateway() (string, error) {
+func getDefaultGateway() (string) {
 	interfaces, err := net.Interfaces()
 	if err != nil {
 		log.Println("Failed to retrieve default gateway: %v", err)
