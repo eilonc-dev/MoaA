@@ -494,7 +494,7 @@ func getIncomingTraffic() (int) {
 // getOutgoingTraffic is a function that returns the outgoing traffic of the host machine.
 func getOutgoingTraffic() (int) {
 	var outgoingTraffic int
-	netStats, err := net.IOCounters(false)
+	netStats, err := gopsutilnet.IOCounters(false)
 	if err != nil {
 		log.Println("Failed to retrieve outgoing traffic: %v", err)
 	}
