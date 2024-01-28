@@ -182,8 +182,8 @@ func getConnectionStats() ConnectionStats {
 	return stats
 }
 
-// GetTCPStats is a function that returns the TCP connection statistics of the host machine.
-func GetTCPStats() (TCPStats) {
+// getTCPStats is a function that returns the TCP connection statistics of the host machine.
+func getTCPStats() (TCPStats) {
 	var stats TCPStats
 	tcp, err := net.Connections("tcp")
 	if err != nil {
