@@ -138,7 +138,7 @@ func getIPAddresses() ([]string) {
 	var ipAddresses []string
 	addrs, err := net.InterfaceAddrs()
 	if err != nil {
-		return log.Println("failed to retrieve IP addresses: %v", err)
+		log.Println("failed to retrieve IP addresses: %v", err)
 	}
 	for _, addr := range addrs {
 		ip, _, err := net.ParseCIDR(addr.String())
