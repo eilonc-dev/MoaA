@@ -185,7 +185,7 @@ func getConnectionStats() ConnectionStats {
 // getTCPStats is a function that returns the TCP connection statistics of the host machine.
 func getTCPStats() (TCPStats) {
 	var stats TCPStats
-	connections, err := gopsutilnet.Connections("tcp")
+	tcp, err := gopsutilnet.Connections("all")
 	if err != nil {
 		log.Println("Failed to retrieve TCP connection statistics: %v", err)
 	}
