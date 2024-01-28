@@ -1,6 +1,7 @@
 package main
 
 import (
+    "log"
 	"fmt"
 	"github.com/eilonc-dev/moaa/sysinfo"
     "github.com/eilonc-dev/moaa/netinfo"
