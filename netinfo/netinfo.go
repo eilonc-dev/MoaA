@@ -481,7 +481,7 @@ func getNetworkTraffic() NetworkTraffic {
 // getIncomingTraffic is a function that returns the incoming traffic of the host machine.
 func getIncomingTraffic() (int) {
 	var incomingTraffic int
-	netStats, err := net.IOCounters(false)
+	netStats, err := gopsutilnet.IOCounters(false)
 	if err != nil {
 		log.Println("Failed to retrieve incoming traffic: %v", err)
 	}
