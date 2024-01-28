@@ -35,7 +35,7 @@ import (
 	"os"
 	"fmt"
 	"log"
-	"github.com/shirou/gopsutil/net"
+	gopsutilnet "github.com/shirou/gopsutil/net"
 )
 
 // NetworkInfo is a struct that holds all the network information of the host machine.
@@ -185,7 +185,7 @@ func getConnectionStats() ConnectionStats {
 // getTCPStats is a function that returns the TCP connection statistics of the host machine.
 func getTCPStats() (TCPStats) {
 	var stats TCPStats
-	tcp, err := net.Connections("tcp")
+	connections, err := gopsutilnet.Connections("tcp")
 	if err != nil {
 		log.Println("Failed to retrieve TCP connection statistics: %v", err)
 	}
