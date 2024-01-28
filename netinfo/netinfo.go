@@ -37,6 +37,7 @@ import (
 	"log"
 	gopsutilnet "github.com/shirou/gopsutil/net"
 	"bufio"
+	"strings"
 )
 
 // NetworkInfo is a struct that holds all the network information of the host machine.
