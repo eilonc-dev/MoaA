@@ -156,7 +156,7 @@ func getIPAddresses() ([]string) {
 func getNetworkInterfaces() ([]NetworkInterface) {
 	interfaces, err := net.Interfaces()
 	if err != nil {
-		return log.Println("failed to retrieve network interfaces: %v", err)
+		log.Println("failed to retrieve network interfaces: %v", err)
 	}
 
 	var networkInterfaces []NetworkInterface
@@ -176,9 +176,9 @@ func getNetworkInterfaces() ([]NetworkInterface) {
 func getConnectionStats() ConnectionStats {
 	var stats ConnectionStats
 	stats.TCP = getTCPStats()
-	stats.UDP, udpErr = getUDPStats()
-	stats.ICMP, icmpErr = getICMPStats()
-	stats.IP, ipErr = getIPStats()
+	stats.UDP = getUDPStats()
+	stats.ICMP = getICMPStats()
+	stats.IP = getIPStats()
 	return stats
 }
 
@@ -188,7 +188,6 @@ func getTCPStats() (TCPStats) {
 	tcp, err := net.Connections("tcp")
 	if err != nil {
 		log.Println("Failed to retrieve TCP connection statistics: %v", err)
-		return nil
 	}
 	for _, t := range tcp {
 		switch t.Status {
@@ -220,48 +219,48 @@ func getTCPStats() (TCPStats) {
 }
 
 // getUDPStats is a function that returns the UDP connection statistics of the host machine.
-func getUDPStats() (UDPStats, error) {
+func getUDPStats() (UDPStats) {
 	var stats UDPStats
 	udp, err := net.Connections("udp")
 	if err != nil {
-		return nil, fmt.Errorf("Failed to retrieve UDP connection statistics: %v", err)
+		log.Println("Failed to retrieve UDP connection statistics: %v", err)
 	}
 	for _, u := range udp {
 		if u.Status == "ESTABLISHED" {
 			stats.Established++
 		}
 	}
-	return stats, nil
+	return stats
 }
 
 // getICMPStats is a function that returns the ICMP connection statistics of the host machine.
-func getICMPStats() (ICMPStats, error) {
+func getICMPStats() (ICMPStats) {
 	var stats ICMPStats
 	icmp, err := net.Connections("icmp")
 	if err != nil {
-		return nil, fmt.Errorf("Failed to retrieve ICMP connection statistics: %v", err)
+		log.Println("Failed to retrieve ICMP connection statistics: %v", err)
 	}
 	for _, i := range icmp {
 		if i.Status == "ESTABLISHED" {
 			stats.Established++
 		}
 	}
-	return stats, nil
+	return stats
 }
 
 // getIPStats is a function that returns the IP connection statistics of the host machine.
-func getIPStats() (IPStats, error) {
+func getIPStats() (IPStats) {
 	var stats IPStats
 	ip, err := net.Connections("ip")
 	if err != nil {
-		return nil, fmt.Errorf("Failed to retrieve IP connection statistics: %v", err)
+		log.Println("Failed to retrieve IP connection statistics: %v", err)
 	}
 	for _, i := range ip {
 		if i.Status == "ESTABLISHED" {
 			stats.Established++
 		}
 	}
-	return stats, nil
+	return stats
 }
 
 // getNetworkConfig is a function that returns the network configuration of the host machine.
