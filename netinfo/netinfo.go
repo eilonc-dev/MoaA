@@ -38,6 +38,7 @@ import (
 	gopsutilnet "github.com/shirou/gopsutil/net"
 	"bufio"
 	"strings"
+	"strconv"
 )
 
 // NetworkInfo is a struct that holds all the network information of the host machine.
@@ -354,9 +355,10 @@ func getActiveConnectionsByProtocol() ([]Connection) {
 		log.Println("Failed to retrieve active connections by protocol: %v", err)
 	}
 	for _, t := range tcp {
+		tPortStr := strconv.FormatUint(uint64(t.Laddr.Port), 10)
 		connection := Connection{
 			Protocol: "tcp",
-			Port:     t.Laddr.Port,
+			Port:     tPortStr,
 			IP:       t.Raddr.IP,
 		}
 		connections = append(connections, connection)
@@ -366,9 +368,10 @@ func getActiveConnectionsByProtocol() ([]Connection) {
 		log.Println("Failed to retrieve active connections by protocol: %v", err)
 	}
 	for _, u := range udp {
+		uPortStr := strconv.FormatUint(uint64(u.Laddr.Port), 10)
 		connection := Connection{
 			Protocol: "udp",
-			Port:     u.Laddr.Port,
+			Port:     uPortStr,
 			IP:       u.Raddr.IP,
 		}
 		connections = append(connections, connection)
@@ -378,9 +381,10 @@ func getActiveConnectionsByProtocol() ([]Connection) {
 		log.Println("Failed to retrieve active connections by protocol: %v", err)
 	}
 	for _, i := range icmp {
+		iPortStr := strconv.FormatUint(uint64(i.Laddr.Port), 10)
 		connection := Connection{
 			Protocol: "icmp",
-			Port:     i.Laddr.Port,
+			Port:     iPortStr,
 			IP:       i.Raddr.IP,
 		}
 		connections = append(connections, connection)
@@ -390,9 +394,10 @@ func getActiveConnectionsByProtocol() ([]Connection) {
 		log.Println("Failed to retrieve active connections by protocol: %v", err)
 	}
 	for _, i := range ip {
+		iPortStr := strconv.FormatUint(uint64(i.Laddr.Port), 10)
 		connection := Connection{
 			Protocol: "ip",
-			Port:     i.Laddr.Port,
+			Port:     iPortStr,
 			IP:       i.Raddr.IP,
 		}
 		connections = append(connections, connection)
