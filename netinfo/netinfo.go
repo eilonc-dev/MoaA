@@ -124,8 +124,8 @@ type NetworkTraffic struct {
 // GetNetworkInfo is a function that returns the network information of the host machine.
 func GetNetworkInfo() NetworkInfo {
 	var info NetworkInfo
-	info.IP, ipErr = getIPAddresses()
-	info.NetworkInterfaces, niErr = getNetworkInterfaces()
+	info.IP = getIPAddresses()
+	info.NetworkInterfaces = getNetworkInterfaces()
 	info.ConnectionStats = getConnectionStats()
 	info.NetworkConfig = getNetworkConfig()
 	info.ActiveConnections = getActiveConnections()
@@ -134,11 +134,11 @@ func GetNetworkInfo() NetworkInfo {
 }
 
 // getIPAddresses is a function that returns the IP addresses of the host machine.
-func getIPAddresses() ([]string, error) {
+func getIPAddresses() ([]string) {
 	var ipAddresses []string
 	addrs, err := net.InterfaceAddrs()
 	if err != nil {
-		return nil, fmt.Errorf("failed to retrieve IP addresses: %v", err)
+		return fmt.Errorf("failed to retrieve IP addresses: %v", err)
 	}
 	for _, addr := range addrs {
 		ip, _, err := net.ParseCIDR(addr.String())
@@ -146,7 +146,7 @@ func getIPAddresses() ([]string, error) {
 			ipAddresses = append(ipAddresses, ip.String())
 		}
 	}
-	return ipAddresses, nil
+	return ipAddresses
 }
 
 // getNetworkInterfaces is a function that returns the network interfaces of the host machine.
