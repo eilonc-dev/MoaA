@@ -3,11 +3,17 @@ package main
 import (
 	"fmt"
 	"github.com/eilonc-dev/moaa/sysinfo"
-    // "github.com/eilonc-dev/moaa/sysinfo"
+    "github.com/eilonc-dev/moaa/netinfo"
 )
 
 func main() {
-	fmt.Println("Hello, World!")
+    log.Println("Starting to read system info...")
+    printSysInfo()
+    log.Println("Starting to read network info...")
+    printNetInfo()
+}
+
+func printSysInfo() {
 	info := sysinfo.GetSystemInfo()
     // Now you can use the info variable to access the system information.
     fmt.Println("OS:", info.OS)
@@ -41,5 +47,40 @@ func main() {
     fmt.Println("Installed Packages:")
     for _, pkg := range info.InstalledPackages {
         fmt.Println("\t", pkg)
+    }
+}
+
+func printNetInfo() {
+    info := netinfo.GetNetworkInfo()
+
+    // This is getNetworkInfo() equivalent code:
+    //   info.IP, ipErr = getIPAddresses()
+    //	info.NetworkInterfaces, niErr = getNetworkInterfaces()
+    //	info.ConnectionStats = getConnectionStats()
+    //	info.NetworkConfig = getNetworkConfig()
+    //	info.ActiveConnections = getActiveConnections()
+    //	info.NetworkTraffic = getNetworkTraffic()
+
+    // Now you can use the info variable to access the network information.
+    fmt.Println("Default Gateway:", info.DefaultGateway)
+    fmt.Println("Default Interface:", info.DefaultInterface)
+    fmt.Println("Interfaces:")
+    for _, iface := range info.Interfaces {
+        fmt.Println("\tName:", iface.Name)
+        fmt.Println("\tHardware Address:", iface.HardwareAddr)
+        fmt.Println("\tFlags:", iface.Flags)
+        fmt.Println("\tMTU:", iface.MTU)
+        fmt.Println("\tIPv4 Addresses:")
+        for _, addr := range iface.IPv4Addresses {
+            fmt.Println("\t\tAddress:", addr.Address)
+            fmt.Println("\t\tNetmask:", addr.Netmask)
+            fmt.Println("\t\tNetwork:", addr.Network)
+        }
+        fmt.Println("\tIPv6 Addresses:")
+        for _, addr := range iface.IPv6Addresses {
+            fmt.Println("\t\tAddress:", addr.Address)
+            fmt.Println("\t\tNetmask:", addr.Netmask)
+            fmt.Println("\t\tNetwork:", addr.Network)
+        }
     }
 }
