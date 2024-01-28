@@ -472,47 +472,47 @@ func getActiveConnectionsByIP() ([]Connection) {
 // getNetworkTraffic is a function that returns the network traffic of the host machine.
 func getNetworkTraffic() NetworkTraffic {
 	var traffic NetworkTraffic
-	traffic.Incoming, incomingErr = getIncomingTraffic()
-	traffic.Outgoing, outgoingErr = getOutgoingTraffic()
-	traffic.Total, totalErr = getTotalTraffic()
+	traffic.Incoming = getIncomingTraffic()
+	traffic.Outgoing = getOutgoingTraffic()
+	traffic.Total = getTotalTraffic()
 	return traffic
 }
 
 // getIncomingTraffic is a function that returns the incoming traffic of the host machine.
-func getIncomingTraffic() (int, error) {
+func getIncomingTraffic() (int) {
 	var incomingTraffic int
 	netStats, err := net.IOCounters(false)
 	if err != nil {
-		return nil, fmt.Errorf("Failed to retrieve incoming traffic: %v", err)
+		log.Println("Failed to retrieve incoming traffic: %v", err)
 	}
 	for _, netStat := range netStats {
 		incomingTraffic += int(netStat.BytesRecv)
 	}
-	return incomingTraffic, nil
+	return incomingTraffic
 }
 
 // getOutgoingTraffic is a function that returns the outgoing traffic of the host machine.
-func getOutgoingTraffic() (int, error) {
+func getOutgoingTraffic() (int) {
 	var outgoingTraffic int
 	netStats, err := net.IOCounters(false)
 	if err != nil {
-		return nil, fmt.Errorf("Failed to retrieve outgoing traffic: %v", err)
+		log.Println("Failed to retrieve outgoing traffic: %v", err)
 	}
 	for _, netStat := range netStats {
 		outgoingTraffic += int(netStat.BytesSent)
 	}
-	return outgoingTraffic, nil
+	return outgoingTraffic
 }
 
 // getTotalTraffic is a function that returns the total traffic of the host machine.
-func getTotalTraffic() (int, error) {
+func getTotalTraffic() (int) {
 	var totalTraffic int
 	netStats, err := net.IOCounters(false)
 	if err != nil {
-		return nil, fmt.Errorf("Failed to retrieve total traffic: %v", err)
+		log.Println("Failed to retrieve total traffic: %v", err)
 	}
 	for _, netStat := range netStats {
 		totalTraffic += int(netStat.BytesSent + netStat.BytesRecv)
 	}
-	return totalTraffic, nil
+	return totalTraffic
 }
