@@ -138,22 +138,25 @@ func getIPAddresses() ([]string) {
 	var ipAddresses []string
 	addrs, err := net.InterfaceAddrs()
 	if err != nil {
-		return fmt.Errorf("failed to retrieve IP addresses: %v", err)
+		return log.Println("failed to retrieve IP addresses: %v", err)
 	}
 	for _, addr := range addrs {
 		ip, _, err := net.ParseCIDR(addr.String())
 		if err == nil && !ip.IsLoopback() && ip.To4() != nil {
 			ipAddresses = append(ipAddresses, ip.String())
+		} // how to handle errors? (if any)
+		if err != nil {
+			log.Println("failed to retrieve IP addresses: %v", err)
 		}
 	}
 	return ipAddresses
 }
 
 // getNetworkInterfaces is a function that returns the network interfaces of the host machine.
-func getNetworkInterfaces() ([]NetworkInterface, error) {
-	interfaces, err := net.Interfaces()
+func getNetworkInterfaces() ([]NetworkInterface) {
+	interfaces:= net.Interfaces()
 	if err != nil {
-		return nil, fmt.Errorf("failed to retrieve network interfaces: %v", err)
+		return log.Println("failed to retrieve network interfaces: %v", err)
 	}
 
 	var networkInterfaces []NetworkInterface
@@ -166,13 +169,13 @@ func getNetworkInterfaces() ([]NetworkInterface, error) {
 		networkInterfaces = append(networkInterfaces, networkInterface)
 	}
 
-	return networkInterfaces, nil
+	return networkInterfaces
 }
 
 // getConnectionStats is a function that returns the connection statistics of the host machine.
 func getConnectionStats() ConnectionStats {
 	var stats ConnectionStats
-	stats.TCP, tcpErr = getTCPStats()
+	stats.TCP = getTCPStats()
 	stats.UDP, udpErr = getUDPStats()
 	stats.ICMP, icmpErr = getICMPStats()
 	stats.IP, ipErr = getIPStats()
@@ -180,11 +183,11 @@ func getConnectionStats() ConnectionStats {
 }
 
 // GetTCPStats is a function that returns the TCP connection statistics of the host machine.
-func GetTCPStats() (TCPStats, error) {
+func GetTCPStats() (TCPStats) {
 	var stats TCPStats
 	tcp, err := net.Connections("tcp")
 	if err != nil {
-		return nil, fmt.Errorf("Failed to retrieve TCP connection statistics: %v", err)
+		return nil, log.Println("Failed to retrieve TCP connection statistics: %v", err)
 	}
 	for _, t := range tcp {
 		switch t.Status {
@@ -212,7 +215,7 @@ func GetTCPStats() (TCPStats, error) {
 			stats.Closing++
 		}
 	}
-	return stats, nil
+	return stats
 }
 
 // getUDPStats is a function that returns the UDP connection statistics of the host machine.
