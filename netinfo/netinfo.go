@@ -413,9 +413,10 @@ func getActiveConnectionsByPort() ([]Connection) {
 		log.Println("Failed to retrieve active connections by port: %v", err)
 	}
 	for _, t := range tcp {
+		tPortStr := strconv.FormatUint(uint64(t.Laddr.Port), 10)
 		connection := Connection{
 			Protocol: "tcp",
-			Port:     t.Laddr.Port,
+			Port:     tPortStr,
 			IP:       t.Raddr.IP,
 		}
 		connections = append(connections, connection)
@@ -425,9 +426,10 @@ func getActiveConnectionsByPort() ([]Connection) {
 		log.Println("Failed to retrieve active connections by port: %v", err)
 	}
 	for _, u := range udp {
+		uPortStr := strconv.FormatUint(uint64(u.Laddr.Port), 10)
 		connection := Connection{
 			Protocol: "udp",
-			Port:     u.Laddr.Port,
+			Port:     uPortStr,
 			IP:       u.Raddr.IP,
 		}
 		connections = append(connections, connection)
@@ -443,9 +445,10 @@ func getActiveConnectionsByIP() ([]Connection) {
 		log.Println("Failed to retrieve active connections by IP: %v", err)
 	}
 	for _, t := range tcp {
+		tPortStr := strconv.FormatUint(uint64(t.Laddr.Port), 10)
 		connection := Connection{
 			Protocol: "tcp",
-			Port:     t.Laddr.Port,
+			Port:     tPortStr,
 			IP:       t.Raddr.IP,
 		}
 		connections = append(connections, connection)
@@ -455,9 +458,10 @@ func getActiveConnectionsByIP() ([]Connection) {
 		log.Println("Failed to retrieve active connections by IP: %v", err)
 	}
 	for _, u := range udp {
+		uPortStr := strconv.FormatUint(uint64(u.Laddr.Port), 10)
 		connection := Connection{
 			Protocol: "udp",
-			Port:     u.Laddr.Port,
+			Port:     uPortStr,
 			IP:       u.Raddr.IP,
 		}
 		connections = append(connections, connection)
