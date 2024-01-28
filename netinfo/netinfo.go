@@ -36,6 +36,7 @@ import (
 	"fmt"
 	"log"
 	gopsutilnet "github.com/shirou/gopsutil/net"
+	"bufio"
 )
 
 // NetworkInfo is a struct that holds all the network information of the host machine.
@@ -300,7 +301,8 @@ func getSubnetMask() (string) {
 	for _, iface := range interfaces {
 		addrs, err := iface.Addrs()
 		if err != nil {
-			return log.Println("Failed to retrieve subnet mask: %v", err)
+			log.Println("Failed to retrieve subnet mask: %v", err)
+			continue
 		}
 		for _, addr := range addrs {
 			if strings.Contains(addr.String(), "/") {
