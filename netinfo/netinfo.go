@@ -340,18 +340,18 @@ func getDefaultGateway() (string) {
 // getActiveConnections is a function that returns the active connections of the host machine.
 func getActiveConnections() ActiveConnections {
 	var connections ActiveConnections
-	connections.ByProtocol, byProtocolErr = getActiveConnectionsByProtocol()
-	connections.ByPort, byPortErr = getActiveConnectionsByPort()
-	connections.ByIP, byIpErr = getActiveConnectionsByIP()
+	connections.ByProtocol = getActiveConnectionsByProtocol()
+	connections.ByPort = getActiveConnectionsByPort()
+	connections.ByIP = getActiveConnectionsByIP()
 	return connections
 }
 
 // getActiveConnectionsByProtocol is a function that returns the active connections of the host machine by protocol.
-func getActiveConnectionsByProtocol() ([]Connection, error) {
+func getActiveConnectionsByProtocol() ([]Connection) {
 	var connections []Connection
 	tcp, err := gopsutilnet.Connections("tcp")
 	if err != nil {
-		return nil, fmt.Errorf("Failed to retrieve active connections by protocol: %v", err)
+		log.Println("Failed to retrieve active connections by protocol: %v", err)
 	}
 	for _, t := range tcp {
 		connection := Connection{
@@ -363,7 +363,7 @@ func getActiveConnectionsByProtocol() ([]Connection, error) {
 	}
 	udp, err := gopsutilnet.Connections("udp")
 	if err != nil {
-		return nil, fmt.Errorf("Failed to retrieve active connections by protocol: %v", err)
+		log.Println("Failed to retrieve active connections by protocol: %v", err)
 	}
 	for _, u := range udp {
 		connection := Connection{
@@ -375,7 +375,7 @@ func getActiveConnectionsByProtocol() ([]Connection, error) {
 	}
 	icmp, err := gopsutilnet.Connections("icmp")
 	if err != nil {
-		return nil, fmt.Errorf("Failed to retrieve active connections by protocol: %v", err)
+		log.Println("Failed to retrieve active connections by protocol: %v", err)
 	}
 	for _, i := range icmp {
 		connection := Connection{
@@ -387,7 +387,7 @@ func getActiveConnectionsByProtocol() ([]Connection, error) {
 	}
 	ip, err := gopsutilnet.Connections("ip")
 	if err != nil {
-		return nil, fmt.Errorf("Failed to retrieve active connections by protocol: %v", err)
+		log.Println("Failed to retrieve active connections by protocol: %v", err)
 	}
 	for _, i := range ip {
 		connection := Connection{
@@ -397,15 +397,15 @@ func getActiveConnectionsByProtocol() ([]Connection, error) {
 		}
 		connections = append(connections, connection)
 	}
-	return connections, nil
+	return connections
 }
 
 // getActiveConnectionsByPort is a function that returns the active connections of the host machine by port.
-func getActiveConnectionsByPort() ([]Connection, error) {
+func getActiveConnectionsByPort() ([]Connection) {
 	var connections []Connection
 	tcp, err := gopsutilnet.Connections("tcp")
 	if err != nil {
-		return nil, fmt.Errorf("Failed to retrieve active connections by port: %v", err)
+		log.Println("Failed to retrieve active connections by port: %v", err)
 	}
 	for _, t := range tcp {
 		connection := Connection{
@@ -417,7 +417,7 @@ func getActiveConnectionsByPort() ([]Connection, error) {
 	}
 	udp, err := gopsutilnet.Connections("udp")
 	if err != nil {
-		return nil, fmt.Errorf("Failed to retrieve active connections by port: %v", err)
+		log.Println("Failed to retrieve active connections by port: %v", err)
 	}
 	for _, u := range udp {
 		connection := Connection{
@@ -427,15 +427,15 @@ func getActiveConnectionsByPort() ([]Connection, error) {
 		}
 		connections = append(connections, connection)
 	}
-	return connections, nil
+	return connections
 }
 
 // getActiveConnectionsByIP is a function that returns the active connections of the host machine by IP.
-func getActiveConnectionsByIP() ([]Connection, error) {
+func getActiveConnectionsByIP() ([]Connection) {
 	var connections []Connection
 	tcp, err := gopsutilnet.Connections("tcp")
 	if err != nil {
-		return nil, fmt.Errorf("Failed to retrieve active connections by IP: %v", err)
+		log.Println("Failed to retrieve active connections by IP: %v", err)
 	}
 	for _, t := range tcp {
 		connection := Connection{
@@ -447,7 +447,7 @@ func getActiveConnectionsByIP() ([]Connection, error) {
 	}
 	udp, err := gopsutilnet.Connections("udp")
 	if err != nil {
-		return nil, fmt.Errorf("Failed to retrieve active connections by IP: %v", err)
+		log.Println("Failed to retrieve active connections by IP: %v", err)
 	}
 	for _, u := range udp {
 		connection := Connection{
@@ -457,7 +457,7 @@ func getActiveConnectionsByIP() ([]Connection, error) {
 		}
 		connections = append(connections, connection)
 	}
-	return connections, nil
+	return connections
 }
 
 // getNetworkTraffic is a function that returns the network traffic of the host machine.
