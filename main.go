@@ -53,35 +53,39 @@ func printSysInfo() {
 
 func printNetInfo() {
     info := netinfo.GetNetworkInfo()
-
-    // This is getNetworkInfo() equivalent code:
-    //   info.IP, ipErr = getIPAddresses()
-    //	info.NetworkInterfaces, niErr = getNetworkInterfaces()
-    //	info.ConnectionStats = getConnectionStats()
-    //	info.NetworkConfig = getNetworkConfig()
-    //	info.ActiveConnections = getActiveConnections()
-    //	info.NetworkTraffic = getNetworkTraffic()
-
-    // Now you can use the info variable to access the network information.
-    fmt.Println("Default Gateway:", info.DefaultGateway)
-    fmt.Println("Default Interface:", info.DefaultInterface)
+    fmt.Println("Default Gateway:", info.NetworkConfig.DefaultGateway)
     fmt.Println("Interfaces:")
-    for _, iface := range info.Interfaces {
+    for _, iface := range info.NetworkInterfaces {
         fmt.Println("\tName:", iface.Name)
-        fmt.Println("\tHardware Address:", iface.HardwareAddr)
-        fmt.Println("\tFlags:", iface.Flags)
-        fmt.Println("\tMTU:", iface.MTU)
-        fmt.Println("\tIPv4 Addresses:")
-        for _, addr := range iface.IPv4Addresses {
-            fmt.Println("\t\tAddress:", addr.Address)
-            fmt.Println("\t\tNetmask:", addr.Netmask)
-            fmt.Println("\t\tNetwork:", addr.Network)
-        }
-        fmt.Println("\tIPv6 Addresses:")
-        for _, addr := range iface.IPv6Addresses {
-            fmt.Println("\t\tAddress:", addr.Address)
-            fmt.Println("\t\tNetmask:", addr.Netmask)
-            fmt.Println("\t\tNetwork:", addr.Network)
-        }
+        fmt.Println("\tStatus:", iface.Status)
+        fmt.Println("\tMAC:", iface.MAC)
     }
+    fmt.Println("Connection Statistics:")
+    fmt.Println("\tTCP Established:", info.ConnectionStats.TCP.Established)
+    fmt.Println("\tTCP SynSent:", info.ConnectionStats.TCP.SynSent)
+    fmt.Println("\tTCP SynRecv:", info.ConnectionStats.TCP.SynRecv)
+    fmt.Println("\tTCP FinWait1:", info.ConnectionStats.TCP.FinWait1)
+    fmt.Println("\tTCP FinWait2:", info.ConnectionStats.TCP.FinWait2)
+    fmt.Println("\tTCP TimeWait:", info.ConnectionStats.TCP.TimeWait)
+    fmt.Println("\tTCP Close:", info.ConnectionStats.TCP.Close)
+    fmt.Println("\tTCP CloseWait:", info.ConnectionStats.TCP.CloseWait)
+    fmt.Println("\tTCP LastAck:", info.ConnectionStats.TCP.LastAck)
+    fmt.Println("\tTCP Listen:", info.ConnectionStats.TCP.Listen)
+    fmt.Println("\tTCP Closing:", info.ConnectionStats.TCP.Closing)
+    fmt.Println("\tUDP Established:", info.ConnectionStats.UDP.Established)
+    fmt.Println("\tICMP Established:", info.ConnectionStats.ICMP.Established)
+    fmt.Println("\tIP Established:", info.ConnectionStats.IP.Established)
+    fmt.Println("Network Configuration:")
+    fmt.Println("\tDNS:", info.NetworkConfig.DNS)
+    fmt.Println("\tSubnet Mask:", info.NetworkConfig.SubnetMask)
+    fmt.Println("Active Connections:")
+    for _, conn := range info.ActiveConnections.ByProtocol {
+        fmt.Println("\tProtocol:", conn.Protocol)
+        fmt.Println("\tPort:", conn.Port)
+        fmt.Println("\tIP:", conn.IP)
+    }
+    fmt.Println("Network Traffic:")
+    fmt.Println("\tIncoming:", info.NetworkTraffic.Incoming)
+    fmt.Println("\tOutgoing:", info.NetworkTraffic.Outgoing)
+    fmt.Println("\tTotal:", info.NetworkTraffic.Total)
 }
