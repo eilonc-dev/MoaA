@@ -5,13 +5,24 @@ import (
 	"fmt"
 	"github.com/eilonc-dev/moaa/src/sysinfo"
     "github.com/eilonc-dev/moaa/src/netinfo"
+    "go.uber.org/zap"
 )
 
 func main() {
-    log.Println("Starting to read system info...")
+    logger, err := zap.NewDevelopment()
+    logger, err := zap.NewProduction()
+    if err != nil {
+      log.Fatalf("can't initialize zap logger: %v", err)
+    }
+    defer logger.Sync()
+    sugar := logger.Sugar()
+    logger.Info("Starting to read system info...")
+    suger.Infow("Starting to read system info...")
     printSysInfo()
-    log.Println("Starting to read network info...")
+    logger.Info("Finished reading system info")
+    logger.Info("Starting to read network info...")
     printNetInfo()
+    logger.Info("Finished reading network info")
 }
 
 func printSysInfo() {
